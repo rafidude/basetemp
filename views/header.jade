@@ -1,0 +1,30 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.brand(href='index.html') My Bootstrap Site
+      .nav-collapse
+        ul.nav
+          li
+            a(href='index.html')
+              i.icon-home.icon-black
+              | Home
+          li
+            a(href='setup-notes.html') Setup Notes
+          li.active
+            a(href='navbar-examples.html') Navbar Examples
+        ul.nav.pull-right
+          li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | DropDown
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href='#myModal', data-toggle='modal') Modal1
+              li
+                a(href='#') Link1
+              li
+                a(href='#') Link2
