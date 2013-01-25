@@ -4,4 +4,4 @@ exports.index = (req, res) ->
     
 exports.nameage = (req, res) ->
   console.log -111, req.body
-  res.redirect "/"
+  res.send "blah"
