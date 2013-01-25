@@ -3,7 +3,7 @@ routes = require("./routes")
 http = require("http")
 app = express()
 app.configure ->
-  app.set "port", process.env.PORT or 3000
+  app.set "port", process.env.PORT or 6000
   app.set "views", __dirname + "/views"
   app.set "view engine", "jade"
   app.use express.favicon()
