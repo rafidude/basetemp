@@ -1,6 +1,6 @@
 exports.index = (req, res) ->
   res.render "index",
-    title: "Express"
+    title: "Base Template"
     
 exports.nameage = (req, res) ->
   console.log -111, req.body
