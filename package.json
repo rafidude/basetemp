@@ -1,6 +1,6 @@
 {
-  "name": "app-temp",
-  "version": "0.0.2",
+  "name": "basetemp",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "start": "node app"

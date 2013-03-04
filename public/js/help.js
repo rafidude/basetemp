@@ -7,9 +7,18 @@ function ajaxPost(form, modalName){
       data: fdata,
       async: true,
       success: function(info){
-        alert(info);
         $(modalName).modal('hide');
-        $(modalName).remove();
       }
+  });
+}
+function initForm(modalName, validationRules){
+  $(modalName).on("hidden", function() { 
+     $(modalName + ' form')[0].reset();
+   });
+  $(modalName + ' form').validate({
+   rules: validationRules,
+   submitHandler: function(form){
+      ajaxPost(form, modalName);
+   }
   });
 }

@@ -1,12 +1,12 @@
-#myModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+#myModal.modal.hide.fade(tabindex='-1', role='dialog')
   .modal-header
-    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+    button.close(type='button', data-dismiss='modal') ×
     h3#myModalLabel Modal header
-    form(action="/nameage", method='post')
+    form#modalform(action="/nameage")
       .modal-body
         .row-fluid
           .span6
-            h4 Create NameAge
+            h4 Create NameAge1
             label Name:
             input.span12(type='text', name='name')
             label Age:
@@ -14,3 +14,9 @@
       .modal-footer
         button.btn(type='button', data-dismiss='modal') Close
         button.btn.btn-primary(type='submit') Save
+script
+  $(function(){
+    initForm('#myModal', {
+       age: "required"
+     });
+  });
