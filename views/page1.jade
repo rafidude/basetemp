@@ -1,0 +1,9 @@
+extends layout
+block content
+  include modal
+  .container
+    h1= title
+    p Welcome to #{title}
+    br
+    br
+    a.btn.btn-success(href='#myModal', data-toggle='modal') Save

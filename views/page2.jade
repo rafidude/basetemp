@@ -1,0 +1,22 @@
+extends layout
+block content
+  include modal
+  .container
+    h1= title
+    p Welcome to #{title}
+    br
+    table.table.table-striped
+      tr
+        th Name
+        th Age
+        th Action
+      - data.forEach(function(row){
+        tr
+          td= row.name
+          td= row.age
+          td
+            a.btn.btn-success(href='#myModal', data-toggle='modal', id="#{row.name}") Update
+      - })
+      br
+    br
+    

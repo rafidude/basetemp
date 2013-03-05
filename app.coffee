@@ -20,6 +20,8 @@ app.configure "development", ->
 
 app.get "/", routes.index
 
+app.get "/:page", routes.page
+
 app.post "/nameage", routes.nameage
 
 http.createServer(app).listen app.get("port"), ->
