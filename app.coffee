@@ -2,8 +2,10 @@ express = require("express")
 routes = require("./routes")
 http = require("http")
 app = express()
-app.configure ->
+app.configure "development", ->
   app.set "port", process.env.PORT or 4000
+  app.use express.logger "dev"
+  app.use express.errorHandler  dumpExceptions: true, showStack:true
   app.set "views", __dirname + "/views"
   app.set "view engine", "jade"
   app.use express.favicon()
