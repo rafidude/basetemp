@@ -1,0 +1,27 @@
+extends layout
+block content
+  include modal
+  include updatemodal
+  include deletemodal
+  .container
+    h1= title
+    p Welcome to #{title}
+    a.btn.btn-success(href='#myModal', data-toggle='modal') Insert
+    br
+    br
+    table.table.table-striped.table-bordered.table-hover
+      tr
+        - for col in columns
+          - if (col !== '_id')
+              th= col[0].toUpperCase() + col.substring(1)
+        th Action
+      - data.forEach(function(row){
+        tr
+          - for col in columns
+            - if (col !== '_id')
+                td= row[col]
+          td
+            a.btn.btn-primary.btn-mini(href='#update-modal', data-toggle='modal', data-pkey="#{row[primaryKey]}") Update 
+            | &nbsp; 
+            a.btn.btn-primary.btn-mini(href='#delete-modal', data-toggle='modal', data-pkey="#{row[primaryKey]}") Delete
+      - })

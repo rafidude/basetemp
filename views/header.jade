@@ -13,9 +13,16 @@
               i.icon-home.icon-black
               | Home
           li
-            a(href='page1') Page 1
-          li
-            a(href='page2') Page 2
+            a(href='page1') Dummy
+          li.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              | Collections
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href='/table/nameage', data-toggle='modal') NameAge
+              li
+                a(href='/table/tt', data-toggle='modal') tt
         ul.nav.pull-right
           li.dropdown
             a.dropdown-toggle(href='#', data-toggle='dropdown')

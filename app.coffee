@@ -4,27 +4,32 @@ http = require("http")
 app = express()
 app.configure "development", ->
   app.set "port", process.env.PORT or 4000
-  app.use express.logger "dev"
   app.use express.errorHandler  dumpExceptions: true, showStack:true
   app.set "views", __dirname + "/views"
   app.set "view engine", "jade"
   app.use express.favicon()
-  app.use express.logger("dev")
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser("your secret here")
   app.use express.session()
-  app.use app.router
   app.use express.static(__dirname + "/public")
+  app.use app.router
 
 app.configure "development", ->
   app.use express.errorHandler()
 
-app.get "/", routes.index
+app.get "/", (req, res)->
+  res.render "index", title:"index"
 
+# Any plain jade page 
 app.get "/:page", routes.page
 
-app.post "/nameage", routes.nameage
+# Grid page shows data from given collection
+app.get "/table/:coll", routes.getTableData #Get data from collection
+
+app.post "/save/:resource", routes.saveFormData
+
+app.post "/delete/:resource", routes.deleteFormData
 
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")

@@ -1,6 +1,6 @@
-tempdb = "temp"
-console.log "Connecting to DB #{tempdb}"
-db = require("mongojs").connect(tempdb)
+cons = require("../utils/constants")
+console.log "Connecting to DB Environment #{cons.dbenv}"
+db = require("mongojs").connect(cons.dbUri)
 
 #obj: single js object
 #data: array of js objects
@@ -74,7 +74,12 @@ exports.getDataArray = (table, criteria, fieldName, callback) ->
       arr.push row[fieldName]
     arr = arr.sort()
     callback err, arr
-    
+
+exports.copyCollection = (table, newtable, callback) ->
+  getData table, null, null, (err, data)->
+    saveObject newtable, data, (err, succ)->
+      callback err, succ
+
 exports.dropCollection = (table, callback) ->
   db.collection(table).drop (err, success) ->
     callback err, success if callback

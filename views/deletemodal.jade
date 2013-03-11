@@ -1,0 +1,11 @@
+#delete-modal.modal.hide.fade(tabindex='-1', role='dialog')
+  .modal-header
+    button.close(type='button', data-dismiss='modal') ×
+    h3 Are you sure you want to delete the row 
+      span.pkey pk
+    form(action="/delete/nameage")
+      input.span12.pk(type='text', name='name', style="visibility: hidden")
+      .modal-footer
+        button.btn(type='button', data-dismiss='modal') Cancel
+        button.btn.btn-primary(type='submit') Delete
+        .pkey(style="visibility: hidden") DummyData
