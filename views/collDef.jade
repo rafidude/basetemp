@@ -1,0 +1,25 @@
+extends layout
+block content
+  .container
+    h1 Create a Collection Definition
+    br
+    form.span8(action="/save/colldef", method="post")
+      label Name:
+      input(type='text', name='name')
+      hr
+      table.table.table-bordered
+        tr
+          th  Field Name
+          th  Field Type
+        tr
+          td
+            input(type='text', name='fields[field1]')
+          td
+            input(type='text', name='fields[type1]')
+        tr
+          td
+            input(type='text', name='fields[field2]')
+          td
+            input(type='text', name='fields[type2]')
+      button.btn.btn-primary(type='submit') Save
+    

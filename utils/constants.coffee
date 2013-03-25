@@ -1,5 +1,5 @@
-exports.writeSafeCollections = ['nameage', 'tt']
-exports.readSafeCollections = ['nameage', 'tt']
+exports.writeSafeCollections = ['colldef', 'nameage', 'tt']
+exports.readSafeCollections = ['colldef', 'nameage', 'tt']
 if process.env.MONGOLAB_URI
   exports.dbUri = process.env.MONGOLAB_URI
   exports.dbenv = "staging or production"
