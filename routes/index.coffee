@@ -19,6 +19,7 @@ exports.saveFormData = (req, res) ->
   opts = {}
   opts.collection = req.params.resource
   opts.formData = req.body
+  console.log -13, opts
   mu.saveFormData opts, (err, succ)->
     if succ
       res.send "success"

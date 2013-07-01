@@ -33,3 +33,6 @@ app.post "/delete/:resource", routes.deleteFormData
 
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
+
+process.on 'uncaughtException', (err)->
+  console.log -998, 'uncaughtException', err

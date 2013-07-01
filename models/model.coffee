@@ -2,6 +2,8 @@ cons = require("../utils/constants")
 console.log "Connecting to DB Environment #{cons.dbenv}"
 db = require("mongojs").connect(cons.dbUri)
 
+exports.ObjectId = db.ObjectId
+
 #obj: single js object
 #data: array of js objects
 

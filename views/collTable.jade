@@ -6,7 +6,7 @@ block content
   .container
     h1= title
     p Welcome to #{title}
-    a.btn.btn-success(href='#myModal', data-toggle='modal') Insert
+    a.btn.btn-success(href='#insert-modal', data-toggle='modal') Insert
     br
     br
     table.table.table-striped.table-bordered.table-hover
@@ -17,6 +17,8 @@ block content
         th Action
       - data.forEach(function(row){
         tr
+          - var pk = primaryKey
+          - var pkval = row[primaryKey]
           for col in columns
             - var val = row[col]
             if (col !== '_id')
@@ -25,7 +27,7 @@ block content
               else
                 td= val
           td
-            a.btn.btn-primary.btn-mini(href='#update-modal', data-toggle='modal', data-pkey="#{row[primaryKey]}") Update 
+            a.btn.btn-primary.btn-mini(href='#update-modal', data-toggle='modal', data-pkey="#{pkval}") Update 
             | &nbsp; 
-            a.btn.btn-primary.btn-mini(href='#delete-modal', data-toggle='modal', data-pkey="#{row[primaryKey]}") Delete
+            a.btn.btn-primary.btn-mini(href='#delete-modal', data-toggle='modal', data-pkey="#{pkval}") Delete
       - })

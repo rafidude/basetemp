@@ -9,3 +9,7 @@
         button.btn(type='button', data-dismiss='modal') Cancel
         button.btn.btn-primary(type='submit') Delete
         .pkey(style="visibility: hidden") DummyData
+script.
+  $(function(){
+    initForm('#delete-modal');
+  });

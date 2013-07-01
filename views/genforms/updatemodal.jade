@@ -1,17 +1,19 @@
 #update-modal.modal.hide.fade(tabindex='-1', role='dialog')
   .modal-header
     button.close(type='button', data-dismiss='modal') ×
-    h3 Modal header
-    form#updatemodalform(action="/save/nameage")
+    h3 Update the record in #{title}
+    form(action="/save/#{title}")
       .modal-body
         .row-fluid
           .span6
-            h4 Update NameAge
-            label Name:
-            input.span12.pk(type='text', name='name')
-            label Age:
-            input.span12(type='text', name='age')
+            for col in columns
+              label #{col}:
+              input.span12(type='text', name="#{col}")
       .modal-footer
         button.btn(type='button', data-dismiss='modal') Close
         button.btn.btn-primary(type='submit') Save
-        .pkey(style="visibility: hidden") DummyPKey
+script.
+  $(function(){
+    initForm('#update-modal', {age: "required"});
+  });
+  
