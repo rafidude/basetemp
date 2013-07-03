@@ -1,0 +1,16 @@
+<div ng-controller='mainCtrl'>
+  <button ng-click='getUsers()'>Get Users</button>
+  <ul>
+    <li ng-repeat='user in users'>{{user.name}}</li>
+  </ul>
+  <select ng-model="username" ng-options="user.name for user in users" ng-change="gotoPage()">
+    <option value="">-- chose user --</option>
+  </select>
+  
+  <ul>
+    <li ng-repeat='person in people'>{{person}}</li>
+  </ul>
+  <input type='text' ng-model='name' />
+  <button ng-click='savePerson()'>Save Person</button>
+  <h2>{{name}}</h2>
+</div>

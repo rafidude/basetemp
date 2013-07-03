@@ -1,6 +1,6 @@
 {
-  "name": "basetemp",
-  "version": "0.1.0",
+  "name": "basetemp with angularjs",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "node app"

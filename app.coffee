@@ -24,8 +24,9 @@ app.get "/", (req, res)->
 # Any plain jade page 
 app.get "/:page", routes.page
 
+app.get "/collection/:coll", routes.getCollectionData #Get data from collection in JSON
 # Grid page shows data from given collection
-app.get "/table/:coll", routes.getTableData #Get data from collection
+app.get "/table/:coll", routes.getTableData #Get data from collection, render tabular page
 
 app.post "/save/:resource", routes.saveFormData
 

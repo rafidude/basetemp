@@ -31,3 +31,11 @@ exports.getTableData = (req, res) ->
   opts.collection = req.params.coll
   mu.getTableData opts, (err, data)->
     res.render 'collTable', data
+
+exports.getCollectionData = (req, res) ->
+  opts = {}
+  opts.collection = req.params.coll
+  console.log -14, opts
+  mu.getTableData opts, (err, data)->
+    console.log -15, data.data
+    res.send(data.data)

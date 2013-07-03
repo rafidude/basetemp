@@ -1,0 +1,9 @@
+<div ng-controller='mainCtrl'>
+  <button ng-click='getUsers()'>Get Users</button>
+  <ul>
+    <li ng-repeat='user in users'>{{user.name}}</li>
+  </ul>
+  <select ng-model="username" ng-options="user.name for user in users">
+    <option value="">-- chose user --</option>
+  </select>
+</div>
