@@ -1,7 +1,12 @@
-express = require("express")
-routes = require("./routes")
-http = require("http")
+express = require "express"
+flash = require "connect-flash"
+routes = require "./routes/formdata"
+auth = require "./routes/auth"
+_ = require 'underscore'
+
+http = require "http"
 app = express()
+
 app.configure "development", ->
   app.set "port", process.env.PORT or 4000
   app.use express.errorHandler  dumpExceptions: true, showStack:true
@@ -11,7 +16,9 @@ app.configure "development", ->
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser("your secret here")
-  app.use express.session()
+  app.use express.session({ secret: 'keyboard cat' })
+  auth.authSetup app
+  app.use flash()
   app.use express.static(__dirname + "/public")
   app.use app.router
 
@@ -20,6 +27,17 @@ app.configure "development", ->
 
 app.get "/", (req, res)->
   res.render "index", title:"index"
+
+app.get "/account", auth.ensureAuthenticated, auth.account
+
+app.get "/login", auth.login
+
+app.post "/login", auth.authenticateLogin(), (req, res) ->
+  res.redirect "/account"
+
+app.get "/logout", (req, res) ->
+  req.logout()
+  res.redirect "/"
 
 # Any plain jade page 
 app.get "/:page", routes.page
