@@ -3,6 +3,7 @@ flash = require "connect-flash"
 routes = require "./routes/formdata"
 auth = require "./routes/auth"
 _ = require 'underscore'
+ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
 
 http = require "http"
 app = express()
@@ -28,12 +29,19 @@ app.configure "development", ->
 app.get "/", (req, res)->
   res.render "index", title:"index"
 
-app.get "/account", auth.ensureAuthenticated, auth.account
+app.get "/account", ensureLoggedIn("/login"), (req, res) ->
+  res.render "account", user: req.user
 
-app.get "/login", auth.login
+app.get "/login", (req, res)->
+  res.render "login", user: req.user, message: req.flash("error")
 
 app.post "/login", auth.authenticateLogin(), (req, res) ->
-  res.redirect "/account"
+  if req.session.returnTo then redirUrl = req.session.returnTo else redirUrl = '/account'
+  res.redirect redirUrl
+
+app.get "/settings", ensureLoggedIn("/login"), (req, res) ->
+  res.render "settings",
+    user: req.user
 
 app.get "/logout", (req, res) ->
   req.logout()

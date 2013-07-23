@@ -2,11 +2,19 @@ passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 _ = require 'underscore'
 
+users = [
+  id: 1, username: "bob", password: "secret", email: "bob@example.com"
+,
+  id: 2, username: "joe", password: "birthday", email: "joe@example.com"
+,
+  id:3, username: 'tt', password: 'tt', email: 'tt@tt.tt'
+]
+
 exports.authSetup = (app) ->
   app.use passport.initialize()
   app.use passport.session()
 
-authenticate = (username, password, done) ->
+localAuthenticate = (username, password, done) ->
   process.nextTick ->
     findByUsername username, (err, user) ->
       return done(err)  if err
@@ -20,7 +28,7 @@ authenticate = (username, password, done) ->
         )
       done null, user
 
-passport.use new LocalStrategy(authenticate)
+passport.use new LocalStrategy(localAuthenticate)
 
 passport.serializeUser (user, done) ->
   done null, user.id
@@ -32,33 +40,15 @@ passport.deserializeUser (id, done) ->
 exports.authenticateLogin = ->
   passport.authenticate("local", failureRedirect: "/login", failureFlash: true)
 
-users = [
-  id: 1, username: "bob", password: "secret", email: "bob@example.com"
-,
-  id: 2, username: "joe", password: "birthday", email: "joe@example.com"
-]
-
-exports.ensureAuthenticated = (req, res, next) ->
-  return next()  if req.isAuthenticated()
-  res.redirect "/login"
-
-exports.account = (req, res) ->
-  res.render "account",
-    user: req.user
-
-exports.login = (req, res) ->
-  res.render "login",
-    user: req.user
-    message: req.flash("error")
-
 findByUsername = (username, done) ->
   process.nextTick ->
     user = _.find users, (ele) ->
-      ele.username = username
+      ele.username is username
     done null, user
 
-exports.findById = findById = (id, done) ->
+findById = (id, done) ->
   process.nextTick ->
     user = _.find users, (ele) ->
-      ele.id = id
+      ele.id is id
+    delete user.password
     done null, user
