@@ -1,7 +1,7 @@
 express = require "express"
 flash = require "connect-flash"
 routes = require "./routes/formdata"
-auth = require "./routes/auth"
+auth = require "./routes/allAuth"
 _ = require 'underscore'
 ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
 
@@ -29,19 +29,27 @@ app.configure "development", ->
 app.get "/", (req, res)->
   res.render "index", title:"index"
 
-app.get "/account", ensureLoggedIn("/login"), (req, res) ->
-  res.render "account", user: req.user
+app.get "/auth/twitter", auth.authenticateTwitterLogin()
+app.get "/auth/twitter/callback", auth.authenticateTwitterLogin()
+
+app.get "/auth/facebook", auth.authenticateFacebookLogin()
+app.get "/auth/facebook/callback", auth.authenticateFacebookLogin()
+
+app.get "/auth/forcedotcom", auth.authenticateForceDotComLogin()
+app.get "/auth/forcedotcom/callback", auth.authenticateForceDotComLogin()
+
+app.post "/login", auth.authenticateLocalLogin(), (req, res) ->
+  if req.session.returnTo then redirUrl = req.session.returnTo else redirUrl = '/account'
+  res.redirect redirUrl
 
 app.get "/login", (req, res)->
   res.render "login", user: req.user, message: req.flash("error")
 
-app.post "/login", auth.authenticateLogin(), (req, res) ->
-  if req.session.returnTo then redirUrl = req.session.returnTo else redirUrl = '/account'
-  res.redirect redirUrl
+app.get "/account", ensureLoggedIn("/login"), (req, res) ->
+  res.render "account", user: req.user
 
 app.get "/settings", ensureLoggedIn("/login"), (req, res) ->
-  res.render "settings",
-    user: req.user
+  res.render "settings", user: req.user
 
 app.get "/logout", (req, res) ->
   req.logout()
