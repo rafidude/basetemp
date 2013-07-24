@@ -12,6 +12,49 @@ passport.serializeUser (user, done) ->
 passport.deserializeUser (obj, done) ->
   done null, obj
 
+# Dropbox Auth Strategy
+DropboxStrategy = require('passport-dropbox').Strategy
+DROPBOX_APP_KEY = "su10ytaxv0js1ac"
+DROPBOX_APP_SECRET = "la67olph2o4lk6e"
+dropboxCredentials = 
+  consumerKey: DROPBOX_APP_KEY
+  consumerSecret: DROPBOX_APP_SECRET
+  callbackURL: baseUrl + "auth/dropbox/callback"
+
+dropboxAuthenticate = (accessToken, refreshToken, profile, done) ->
+  console.log -21, profile
+  done null, profile
+
+passport.use new DropboxStrategy(dropboxCredentials, dropboxAuthenticate)
+
+exports.authenticateDropboxLogin = ->
+  dropboxAuthOptions = 
+    successReturnToOrRedirect: "/settings"
+    failureRedirect: "/login"
+  passport.authenticate("dropbox", dropboxAuthOptions)
+
+# Google Auth Strategy
+GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+GOOGLE_CLIENT_ID = "711413099716.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "hHLdA97mB8__B1rxGW7jsOsz"
+googleCredentials = 
+  clientID: GOOGLE_CLIENT_ID
+  clientSecret: GOOGLE_CLIENT_SECRET
+  callbackURL: baseUrl + "auth/google/callback"
+
+googleAuthenticate = (accessToken, refreshToken, profile, done) ->
+  console.log -21, profile
+  done null, profile
+
+passport.use new GoogleStrategy(googleCredentials, googleAuthenticate)
+
+exports.authenticateGoogleLogin = ->
+  googleAuthOptions = 
+    scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
+    successReturnToOrRedirect: "/settings"
+    failureRedirect: "/login"
+  passport.authenticate("google", googleAuthOptions)
+
 # ForceDotCom Auth Strategy
 ForceDotComStrategy = require('passport-forcedotcom').Strategy
 FORCEDOTCOM_CLIENT_ID = "1381203388769841"

@@ -38,6 +38,12 @@ app.get "/auth/facebook/callback", auth.authenticateFacebookLogin()
 app.get "/auth/forcedotcom", auth.authenticateForceDotComLogin()
 app.get "/auth/forcedotcom/callback", auth.authenticateForceDotComLogin()
 
+app.get "/auth/google", auth.authenticateGoogleLogin()
+app.get "/auth/google/callback", auth.authenticateGoogleLogin()
+
+app.get "/auth/dropbox", auth.authenticateDropboxLogin()
+app.get "/auth/dropbox/callback", auth.authenticateDropboxLogin()
+
 app.post "/login", auth.authenticateLocalLogin(), (req, res) ->
   if req.session.returnTo then redirUrl = req.session.returnTo else redirUrl = '/account'
   res.redirect redirUrl
