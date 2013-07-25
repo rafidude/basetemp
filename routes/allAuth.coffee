@@ -22,8 +22,16 @@ dropboxCredentials =
   callbackURL: baseUrl + "auth/dropbox/callback"
 
 dropboxAuthenticate = (accessToken, refreshToken, profile, done) ->
-  console.log -21, profile
+  console.log -25, profile.id, profile.emails[0].value, profile.displayName
+  doSomething accessToken
   done null, profile
+
+doSomething = (accessToken)->
+  dbox = require 'dbox'
+  app = dbox.app app_key: DROPBOX_APP_KEY, app_secret: DROPBOX_APP_SECRET
+  client = app.client accessToken
+  client.account (status, reply) ->
+    console.log -31, accessToken, status, reply
 
 passport.use new DropboxStrategy(dropboxCredentials, dropboxAuthenticate)
 
@@ -43,7 +51,7 @@ googleCredentials =
   callbackURL: baseUrl + "auth/google/callback"
 
 googleAuthenticate = (accessToken, refreshToken, profile, done) ->
-  console.log -21, profile
+  console.log -21, profile.emails[0].value, profile.displayName
   done null, profile
 
 passport.use new GoogleStrategy(googleCredentials, googleAuthenticate)
@@ -55,23 +63,6 @@ exports.authenticateGoogleLogin = ->
     failureRedirect: "/login"
   passport.authenticate("google", googleAuthOptions)
 
-# ForceDotCom Auth Strategy
-ForceDotComStrategy = require('passport-forcedotcom').Strategy
-FORCEDOTCOM_CLIENT_ID = "1381203388769841"
-FORCEDOTCOM_CLIENT_SECRET = "6c74c3a4f021e269042a4c513b605d3a"
-forcedotcomCredentials = 
-  clientID: FORCEDOTCOM_CLIENT_ID
-  clientSecret: FORCEDOTCOM_CLIENT_SECRET
-  callbackURL: baseUrl + "auth/forcedotcom/callback"
-
-forcedotcomAuthenticate = (accessToken, refreshToken, profile, done) ->
-  done null, profile
-
-passport.use new ForceDotComStrategy(forcedotcomCredentials, forcedotcomAuthenticate)
-
-exports.authenticateForceDotComLogin = ->
-  passport.authenticate("forcedotcom", successReturnToOrRedirect: "/settings", failureRedirect: "/login")
-
 # Facebook Auth Strategy
 FacebookStrategy = require('passport-facebook').Strategy
 FACEBOOK_CLIENT_ID = "1381203388769841"
@@ -82,6 +73,7 @@ facebookCredentials =
   callbackURL: baseUrl + "auth/facebook/callback"
 
 facebookAuthenticate = (accessToken, refreshToken, profile, done) ->
+  console.log -23, profile.id, profile.username, profile.displayName
   done null, profile
 
 passport.use new FacebookStrategy(facebookCredentials, facebookAuthenticate)
@@ -100,6 +92,7 @@ twitterCredentials =
   callbackURL: baseUrl + "auth/twitter/callback"
 
 twitterAuthenticate = (token, tokenSecret, profile, done) ->
+  console.log -22, profile.id, profile.username, profile.displayName
   done null, profile
 
 passport.use new TwitterStrategy(twitterCredentials, twitterAuthenticate)
@@ -143,3 +136,20 @@ findByUsername = (username, done) ->
     user = _.find users, (ele) ->
       ele.username is username
     done null, user
+
+# ForceDotCom Auth Strategy
+# ForceDotComStrategy = require('passport-forcedotcom').Strategy
+# FORCEDOTCOM_CLIENT_ID = "1381203388769841"
+# FORCEDOTCOM_CLIENT_SECRET = "6c74c3a4f021e269042a4c513b605d3a"
+# forcedotcomCredentials = 
+#   clientID: FORCEDOTCOM_CLIENT_ID
+#   clientSecret: FORCEDOTCOM_CLIENT_SECRET
+#   callbackURL: baseUrl + "auth/forcedotcom/callback"
+# 
+# forcedotcomAuthenticate = (accessToken, refreshToken, profile, done) ->
+#   done null, profile
+# 
+# passport.use new ForceDotComStrategy(forcedotcomCredentials, forcedotcomAuthenticate)
+# 
+# exports.authenticateForceDotComLogin = ->
+#   passport.authenticate("forcedotcom", successReturnToOrRedirect: "/settings", failureRedirect: "/login")

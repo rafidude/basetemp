@@ -35,9 +35,6 @@ app.get "/auth/twitter/callback", auth.authenticateTwitterLogin()
 app.get "/auth/facebook", auth.authenticateFacebookLogin()
 app.get "/auth/facebook/callback", auth.authenticateFacebookLogin()
 
-app.get "/auth/forcedotcom", auth.authenticateForceDotComLogin()
-app.get "/auth/forcedotcom/callback", auth.authenticateForceDotComLogin()
-
 app.get "/auth/google", auth.authenticateGoogleLogin()
 app.get "/auth/google/callback", auth.authenticateGoogleLogin()
 
